@@ -1,0 +1,23 @@
+{% extends 'choonz/base.html' %}
+{% load staticfiles %}
+
+{% block title_block %}
+	Register
+{% endblock %}
+
+{% block body_block %}
+	<h1>Register for choonz</h1>
+	{% if registered %}
+		choonz says: <strong>thank you for registering!</strong>
+		<a href="{% url 'choonz:index' %}">Return to the homepage.</a><br />
+	{% else %}
+		choonz says: <strong>register here!</strong><br />
+		<form id="user_form" method="post" action="{% url 'choonz:register' %}" enctype="multipart/form-data">
+			{% csrf_token %}
+			<!-- display both forms -->
+			{{ user_form.as_p }}
+			{{ profile_form.as_p }}
+			<input type="submit" name="submit" value="Register" />
+		</form>
+	{% endif %}
+{% endblock %}

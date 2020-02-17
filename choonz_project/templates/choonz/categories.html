@@ -1,0 +1,13 @@
+<ul class="nav flex-column">
+	{% if playlists %}
+		{% for c in playlists %}
+			{% if c == current_playlist %}
+				<li class="nav-item"><a class="nav-link active" href="{% url 'choonz:show_playlist' c.slug %}"><span data-feather="archive"></span>{{ c.name }}</a></li>
+			{% else %}
+				<li class="nav-item"><a class="nav-link active" href="{% url 'choonz:show_playlist' c.slug %}"><span data-feather="archive"></span>{{ c.name }}</a></li>
+			{% endif %}
+		{% endfor %}
+	{% else %}
+		<li class="nav-item"><strong>There are no playlists present.</strong></li>
+	{% endif %}
+</ul>

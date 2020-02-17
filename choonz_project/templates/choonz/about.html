@@ -1,0 +1,37 @@
+{% extends 'choonz/base.html' %}
+{% load staticfiles %}
+
+{% block title_block %}
+	About choonz
+{% endblock %}
+
+{% block body_block %}
+	<div class="jumbotron p-4">
+		<div class="container">
+			<h1 class="jumbotron-heading">choonz says...</h1>
+			<div>
+				<h2 class="h2">
+				Here is the tutorial page.
+				<strong>This tutorial has been put together by Duncan.</strong>
+				</h2>
+			</div>
+		</div>
+	</div>
+
+	<div>
+		<p>Visits: {{ visits}}</p>
+	</div>
+
+	<div>
+		<a href="{% url 'choonz:index' %}">Index</a><br />
+		<img src="{% static 'images/choonz.jpg' %}" alt="Picture of choonz" />
+		<img src="{{ MEDIA_URL }}cat.jpg" alt="Picture of a Cat" />
+	</div>
+
+	<br />
+	<button class="btn btn-primary" id="about-btn">
+		Click me - I'm using JQuery!
+	</button>
+	<p>This is some text for the JQuery hover example</p>
+	<div id="msg">Hello! I'm a further example for JQuery testing!</div>
+{% endblock %}

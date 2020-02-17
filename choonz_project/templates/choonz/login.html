@@ -1,0 +1,22 @@
+{% extends 'choonz/base.html' %}
+{% load staticfiles %}
+
+{% block title_block %}
+	Login
+{% endblock %}
+
+{% block body_block %}
+	<div class="jumbotron p-4">
+		<div class="container">
+			<h1 class="jumbotron-heading">Login to choonz</h1>
+		</div>
+	</div>
+	<form id="login_form" method="POST" action="{% url 'choonz:login' %}">
+		{% csrf_token %}
+		Username: <input type="text" name="username" value="" size="50" />
+		<br />
+		Password: <input type="password" name="password" value="" size="50" />
+		<br />
+		<input type="submit" value="submit" />
+	</form>
+{% endblock %}

@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+
+{% load staticfiles %}
+{% load choonz_template_tags %}
+
+<html>
+	<head lang="en">
+		<meta charset="UTF-8" />
+		<title>choonz - 
+			{% block title_block %}
+				How to Tango with Django!
+			{% endblock %}
+		</title>
+	</head>
+
+	<body>
+		<!-- page specific content -->
+		<div>
+			{% block body_block %}
+			{% endblock %}
+		</div>
+		<div>
+			{% block sidebar_block %}
+				{% get_playlist_list %}
+			{% endblock %}
+		</div>
+		<hr />
+		<div>
+			<ul>
+				{% if user.is_authenticated %}
+					<li><a href="{% url 'choonz:add_playlist' %}">Add a New Playlist</a></li>
+					<li><a href="{% url 'choonz:restricted' %}">Restricted Page</a></li>
+					<li><a href="{% url 'auth_password_change' %}">Change Password</a></li>
+					<li><a href="{% url 'auth_logout' %}?next={% url 'choonz:index' %}">Logout</a></li>
+				{% else %}
+					<li><a href="{% url 'registration_register' %}">Sign Up</a></li>
+					<li><a href="{% url 'auth_login' %}">Login</a></li>
+				{% endif %}
+					<li><a href="{% url 'choonz:about' %}">About</a></li>
+					<li><a href="{% url 'choonz:index' %}">Index</a></li>
+			</ul>
+		</div>
+				
+	</body>
+</html>

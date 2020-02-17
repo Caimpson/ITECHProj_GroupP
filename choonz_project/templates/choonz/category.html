@@ -1,0 +1,87 @@
+{% extends 'rango/base.html' %}
+{% load staticfiles %}
+
+{% block title_block %}
+	{% if playlist %}
+		{{ playlist.name }}
+	{% else %}
+		Unknown Playlist
+	{% endif %}
+{% endblock %}
+
+{% block body_block %}
+	{% if playlist %}
+		<div class="jumbotron p-4">
+			<div class="container">
+				<h1 class="jumbotron-heading">{{ playlist.name }}</h1>
+				<div>
+					<strong id="like_count">{{ playlist.likes }}</strong> likes
+					{% if user.is_authenticated %}
+						<button id="like_btn" data-playlistid="{{ playlist.id }}" class="btn btn-primary btn-sm" type="button">
+							<span data-feather="thumbs-up"></span>
+							Like Playlist
+						</button>
+					{% endif %}
+				</div>
+			</div>
+		</div>
+		
+		<div id="page-listing">
+		{% if pages %}
+			<ul>
+				{% for page in pages %}
+					<li><a href="{% url 'rango:goto' %}?page_id={{page.id}}">{{ page.title }}</a>
+						{% if page.views > 1 %}
+			                ({{ page.views }} views)
+			            {% elif page.views == 1 %}
+			                ({{ page.views}} view)
+			            {% endif %}
+		        	</li>
+				{% endfor %}
+			</ul>
+		</div>
+		{% else %}
+			<strong>No pages currently in playlist.</strong>
+		{% endif %}
+
+		{% if user.is_authenticated %}
+
+		<div>
+			<form class="form-inline" id="user-form" method="post" action="{% url 'rango:show_playlist' playlist.slug %}">
+				{% csrf_token %}
+
+				<div class="form-group">
+					<input class="form-control" type="text" size="50" name="query" id="query" value="{{ query }}"/>
+				</div>
+
+				<button class="btn btn-primary" type="submit" name="submit">Search</button>
+			</form>
+		</div>
+		<div>
+			{% if result_list %}
+				<h2>Results</h2>
+
+				<div class="list-group">
+					{% for result in result_list %}
+						<div class="list-group-item">
+			                <h3 class="list-group-item-heading">
+			                    <a href="{{ result.link }}">{{ result.title|safe|escape }}</a>
+			                    <button class="btn btn-info btn-sm rango-page-add" data-playlistid="{{ playlist.id }}" data-title="{{ result.title }}" data-url="{{ result.link }}" type="button">
+								Add
+							</button>
+			                </h3>
+			                <p class="list-group-item-text">
+			                    {{ result.summary|safe|escape }}
+			                </p>
+						</div>
+					{% endfor %}
+				</div>
+			{% endif %}
+		</div>
+
+		{% endif %}
+
+	{% else %}
+		The specified playlist does not exist.
+	{% endif %}
+{% endblock %}
