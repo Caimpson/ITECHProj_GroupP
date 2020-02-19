@@ -1,0 +1,3 @@
+create a conda environment from the environment_droplet.yml by using:
+
+conda env create -f environment.yml
